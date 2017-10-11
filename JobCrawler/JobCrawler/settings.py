@@ -15,6 +15,8 @@ SPIDER_MODULES = ['JobCrawler.spiders']
 NEWSPIDER_MODULE = 'JobCrawler.spiders'
 
 
+LOG_LEVEL = 'WARNING'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'JobCrawler (+http://www.yourdomain.com)'
 

@@ -6,14 +6,14 @@ from scrapy.contrib.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 import json
 
-f = open('job.json', 'w', encoding='utf-8')
-idx = 79758800
+idx = 75000000
+f = open(str(idx) + '.json', 'w', encoding='utf-8')
 
 
 class Job51Spider(CrawlSpider):
     name = "51Job"
     allowed_domains = ['51job.com']
-    start_urls = ['http://jobs.51job.com/beijing/79758800.html?s=01&t=0']
+    start_urls = ['http://www.51job.com/']
 
     @staticmethod
     def filter(url):
@@ -27,6 +27,8 @@ class Job51Spider(CrawlSpider):
             or re.match(r'http://i\..*', url)
             or re.match(r'http://my\..*', url)
             or re.match(r'http://app\..*', url)
+            or re.match(r'http://arts\..*', url)
+            or re.match(r'http://bbs\..*', url)
         )
 
     def parse(self, response):
@@ -49,12 +51,12 @@ class Job51Spider(CrawlSpider):
                     item['salary_max'] = '未知'
                     item['salary_period'] = '未知'
                 else:
-                    if match.group(5) is '万':
-                        item['salary_min'] = str(int(match.group(1)) * 10000)
-                        item['salary_max'] = str(int(match.group(3)) * 10000)
-                    elif match.group(5) is '千':
-                        item['salary_min'] = str(int(match.group(1)) * 1000)
-                        item['salary_max'] = str(int(match.group(3)) * 1000)
+                    if str(match.group(5)) == '万':
+                        item['salary_min'] = str(float(match.group(1)) * 10000)
+                        item['salary_max'] = str(float(match.group(3)) * 10000)
+                    elif str(match.group(5)) == '千':
+                        item['salary_min'] = str(float(match.group(1)) * 1000)
+                        item['salary_max'] = str(float(match.group(3)) * 1000)
                     else:
                         item['salary_min'] = match.group(1) + match.group(5)
                         item['salary_max'] = match.group(3) + match.group(5)
@@ -98,7 +100,7 @@ class Job51Spider(CrawlSpider):
                     if re.match(r'(.*)经验', i.strip(), re.U):
                         item['require_experience'] = re.match(r'(.*)经验', i.strip(), re.U).group(1)
                         continue
-                    if i in ['小学', '中学', '初中', '高中', '中专', '大专', '本科', '硕士', '博士', '博士后']:
+                    if i in ['初中及以下', '中技', '初中', '高中', '中专', '大专', '本科', '硕士', '博士', '博士后']:
                         item['require_degree'] = i
                         continue
                     item['require_skills'].append(i.strip())
@@ -128,15 +130,14 @@ class Job51Spider(CrawlSpider):
                 f.flush()
                 # yield item
         except:
-            print(response.url)
+            print('####' + response.url)
 
         global idx
-        if idx > 79758800:
-            print('####')
+        if idx > 75000000:
+            print(response.url)
             return
         else:
-            while idx < 79768800:
-                print(idx)
+            while idx < 76000000:
                 idx += 1
                 yield scrapy.Request('http://jobs.51job.com/beijing/' + str(idx) + '.html?s=01&t=0',
                                      callback=self.parse)
