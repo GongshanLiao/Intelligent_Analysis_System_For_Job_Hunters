@@ -6,7 +6,8 @@ from scrapy.contrib.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 import json
 
-idx = 75000000
+cons = 91400000
+idx = cons
 f = open(str(idx) + '.json', 'w', encoding='utf-8')
 
 
@@ -132,17 +133,6 @@ class Job51Spider(CrawlSpider):
         except:
             print('####' + response.url)
 
-        global idx
-        if idx > 75000000:
-            print(response.url)
-            return
-        else:
-            while idx < 76000000:
-                idx += 1
-                yield scrapy.Request('http://jobs.51job.com/beijing/' + str(idx) + '.html?s=01&t=0',
-                                     callback=self.parse)
 
-        '''
         for url in filter(self.filter, response.xpath('//a/@href').extract()):
             yield scrapy.Request(url, callback=self.parse)
-        '''
