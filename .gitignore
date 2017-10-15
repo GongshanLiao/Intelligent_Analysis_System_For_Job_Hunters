@@ -7,8 +7,10 @@ __pycache__/
 *.so
 
 data.json
+51job_spider.py
 *.cpp
 *.exe
+*.docx
 
 # Distribution / packaging
 .Python

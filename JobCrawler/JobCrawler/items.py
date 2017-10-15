@@ -1,9 +1,4 @@
-# -*- coding`` utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in``
-# http``//doc.scrapy.org/en/latest/topics/items.html
+# -*- coding utf-8 -*-
 
 import scrapy
 
@@ -13,7 +8,7 @@ class JobcrawlerItem(scrapy.Item):
 
     Use Scrapy field to store data
 
-    Attributes``
+    Attributes
         ``title`` is the name of the job.
         ``city`` is the city of that job.
         ``salary_min`` is the lower bound of the salary.
@@ -21,8 +16,22 @@ class JobcrawlerItem(scrapy.Item):
         ``salary_period`` is the time units, like per month or per year.
         ``company_name`` is the name of the company which provides the job.
         ``company_type`` is the type of a company like a joint venture
-
+        ``company_size`` is the number of workers in a company
+        ``company_attr`` is the attribute of the company like an Internet company
+        ``company_info`` is a text that describes basic information about a company
+        ``require_experience`` is the required years of job experience before
+        ``require_degree`` is the required degree like a master
+        ``require_num`` is the number of workers that the company wants to employs
+        ``require_skills`` is the list of other skills that the company requires
+        ``publish_date`` is the date that this information was published
+        ``job_tags`` is the tags of a job like 'flexible working time'
+        ``job_description`` is the text that describe the detailed information about this job
+        ``job_type`` is a list that describe the type of this job like 'software engineer'
+        ``job_keywords`` is a list of keywords about a job
+        ``job_location`` is the location of the workplace
+        ``department`` is the department of a job
     """
+
     title = scrapy.Field()
     city = scrapy.Field()
     salary_min = scrapy.Field()
